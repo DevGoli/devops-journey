@@ -1,0 +1,45 @@
+# ---- Terraform ----
+**/.terraform/*
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+crash.log
+crash.*.log
+
+# Variable files may contain secrets - commit *.tfvars.example instead
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+tfplan
+*.tfplan
+
+# ---- Credentials / secrets ----
+*.pem
+*.key
+*.ppk
+.env
+.env.*
+azure-creds.json
+credentials
+kubeconfig
+*.kubeconfig
+
+# ---- Ansible ----
+*.retry
+vault-pass.txt
+
+# ---- OS / editor ----
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp

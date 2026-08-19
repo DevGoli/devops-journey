@@ -1,0 +1,65 @@
+# DevOps Learning Journey — Terraform
+
+Hands-on notes and labs from my daily DevOps study, currently on **Day 51**.
+Everything here is written and run by me — notes in my own words, and working
+infrastructure code I have actually deployed and destroyed.
+
+**Currently focused on:** Terraform (Infrastructure as Code) on Azure and AWS.
+
+---
+
+## Progress
+
+| # | Topic | Days | Status |
+|---|-------|------|--------|
+| 01 | [Introduction & Setup](05-terraform/notes/01-intro-and-setup.md) | 48 | ✅ |
+| 02 | [Core Workflow & Commands](05-terraform/notes/02-workflow-and-commands.md) | 49 | ✅ |
+| 03 | [State File](05-terraform/notes/03-state-file.md) | 50 | ✅ |
+| 04 | [Remote Backend](05-terraform/notes/04-remote-backend.md) | 51 | 🔄 |
+
+Earlier topics (Linux, Git, Docker, Kubernetes) and later ones (Ansible, CI/CD)
+will be added as separate folders.
+
+## Labs
+
+| Lab | What it builds |
+|-----|----------------|
+| [01 — First Azure resource](05-terraform/labs/01-azure-first-resource/) | Resource group via the full init→apply→destroy workflow |
+| [02 — Remote backend on Azure](05-terraform/labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
+
+## Reference
+
+- [Terraform command cheatsheet](_cheatsheets/terraform-commands.md)
+
+---
+
+## Repository structure
+
+```
+├── 05-terraform/
+│   ├── notes/          concepts, in my own words, tagged by day
+│   └── labs/           working code, each with its own README
+└── _cheatsheets/       quick command references
+```
+
+Notes carry the day number they came from, so the daily timeline is preserved
+without exploding into 100+ folders.
+
+---
+
+## A note on secrets
+
+State files, `*.tfvars`, keys and kubeconfigs are excluded via
+[`.gitignore`](.gitignore). Terraform state is stored in a remote backend, never
+in version control — it is plain text and can expose subscription IDs and
+resource metadata. Example variable files are committed as `*.tfvars.example`
+with placeholder values.
+
+---
+
+## About me
+
+Dev Goli — transitioning into DevOps / Cloud Infrastructure engineering.
+
+- LinkedIn: _add link_
+- Contact: _add email or portfolio link_
