@@ -1,0 +1,3 @@
+# Keep GitHub's language stats meaningful - vendored front-end libraries
+# (bootstrap, jquery) are scaffolded by Visual Studio, not written by me.
+**/wwwroot/lib/** linguist-vendored

@@ -43,3 +43,12 @@ desktop.ini
 .vscode/
 .idea/
 *.swp
+
+# ---- .NET ----
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+*.user
+*.suo
+.vs/

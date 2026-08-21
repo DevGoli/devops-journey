@@ -1,0 +1,1060 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Netflix Home";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Netflix</title>
+
+    <style>
+            * {
+                box-sizing: border-box;
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+                background: #141414;
+                color: white;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            body {
+                overflow-x: hidden;
+            }
+
+            /* =========================
+               NAVBAR
+            ========================= */
+
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 68px;
+                z-index: 1000;
+
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                padding: 0 4%;
+
+                background: linear-gradient(
+                    to bottom,
+                    rgba(0,0,0,.95),
+                    rgba(0,0,0,.7),
+                    transparent
+                );
+            }
+
+            .nav-left {
+                display: flex;
+                align-items: center;
+            }
+
+            .logo {
+                color: #e50914;
+                font-size: 28px;
+                font-weight: 900;
+                letter-spacing: -2px;
+                margin-right: 35px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 22px;
+            }
+
+            .nav-links a {
+                color: #ddd;
+                text-decoration: none;
+                font-size: 14px;
+            }
+
+            .nav-links a:hover,
+            .nav-links a.active {
+                color: white;
+                font-weight: bold;
+            }
+
+            .nav-right {
+                display: flex;
+                align-items: center;
+                gap: 18px;
+            }
+
+            .search {
+                font-size: 25px;
+                cursor: pointer;
+            }
+
+            .notification {
+                font-size: 23px;
+                cursor: pointer;
+            }
+
+            .kids {
+                font-size: 13px;
+            }
+
+            .profile {
+                width: 32px;
+                height: 32px;
+                border-radius: 4px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                background: linear-gradient(135deg, #e50914, #770008);
+                font-weight: bold;
+            }
+
+            /* =========================
+               HERO
+            ========================= */
+
+            .hero {
+                height: 78vh;
+                min-height: 580px;
+                position: relative;
+
+                display: flex;
+                align-items: center;
+
+                background:
+                    radial-gradient(
+                        circle at 70% 40%,
+                        rgba(80,120,150,.8),
+                        transparent 28%
+                    ),
+                    radial-gradient(
+                        circle at 50% 50%,
+                        rgba(40,70,90,.9),
+                        transparent 35%
+                    ),
+                    linear-gradient(
+                        90deg,
+                        #050607 0%,
+                        #10191f 40%,
+                        #263f4d 70%,
+                        #090b0c 100%
+                    );
+            }
+
+            .hero::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+
+                background:
+                    linear-gradient(
+                        90deg,
+                        rgba(0,0,0,.9),
+                        rgba(0,0,0,.35),
+                        transparent
+                    ),
+                    linear-gradient(
+                        0deg,
+                        #141414 0%,
+                        transparent 25%
+                    );
+            }
+
+            .hero-person {
+                position: absolute;
+                right: 10%;
+                bottom: 0;
+
+                width: 330px;
+                height: 500px;
+
+                border-radius: 50% 50% 0 0;
+
+                background:
+                    radial-gradient(
+                        circle at 50% 17%,
+                        #c7956e 0 7%,
+                        transparent 8%
+                    ),
+                    linear-gradient(
+                        100deg,
+                        transparent 20%,
+                        #111a20 21% 75%,
+                        transparent 76%
+                    );
+
+                opacity: .75;
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 5;
+
+                margin-left: 4%;
+                max-width: 620px;
+                padding-top: 50px;
+            }
+
+            .original {
+                font-size: 13px;
+                font-weight: bold;
+                letter-spacing: 4px;
+                margin-bottom: 15px;
+            }
+
+            .hero-title {
+                font-size: clamp(55px, 7vw, 90px);
+                line-height: .85;
+
+                margin: 0 0 20px;
+
+                font-weight: 900;
+                letter-spacing: -5px;
+
+                text-shadow: 0 3px 20px black;
+            }
+
+            .details {
+                display: flex;
+                gap: 15px;
+
+                color: #ddd;
+                font-size: 14px;
+
+                margin-bottom: 18px;
+            }
+
+            .description {
+                max-width: 540px;
+
+                color: #eee;
+
+                line-height: 1.5;
+                font-size: 17px;
+            }
+
+            .hero-buttons {
+                display: flex;
+                gap: 10px;
+
+                margin-top: 25px;
+            }
+
+            .btn {
+                border: none;
+                border-radius: 4px;
+
+                padding: 12px 23px;
+
+                font-size: 16px;
+                font-weight: bold;
+
+                cursor: pointer;
+            }
+
+            .btn-play {
+                background: white;
+                color: black;
+            }
+
+            .btn-info {
+                background: rgba(109,109,110,.75);
+                color: white;
+            }
+
+            .btn:hover {
+                opacity: .8;
+            }
+
+            /* =========================
+               CONTENT
+            ========================= */
+
+            .content {
+                position: relative;
+                z-index: 10;
+
+                margin-top: -70px;
+
+                padding: 0 4% 60px;
+            }
+
+            .row {
+                margin-bottom: 35px;
+            }
+
+            .row-title {
+                font-size: 21px;
+                margin-bottom: 14px;
+            }
+
+            .movie-row {
+                display: flex;
+                gap: 8px;
+
+                overflow-x: auto;
+
+                scrollbar-width: none;
+            }
+
+            .movie-row::-webkit-scrollbar {
+                display: none;
+            }
+
+            /* =========================
+               MOVIE CARD
+            ========================= */
+
+            .movie {
+                flex: 0 0 calc(16.66% - 7px);
+
+                min-width: 170px;
+
+                border-radius: 5px;
+
+                overflow: hidden;
+
+                background: #222;
+
+                cursor: pointer;
+
+                transition:
+                    transform .25s ease,
+                    box-shadow .25s ease;
+            }
+
+            .movie:hover {
+                transform: scale(1.08);
+
+                z-index: 20;
+
+                box-shadow: 0 8px 30px rgba(0,0,0,.8);
+            }
+
+            .poster {
+                height: 230px;
+
+                display: flex;
+                align-items: flex-end;
+
+                padding: 15px;
+
+                position: relative;
+            }
+
+            .poster::after {
+                content: "";
+
+                position: absolute;
+                inset: 0;
+
+                background:
+                    linear-gradient(
+                        transparent 40%,
+                        rgba(0,0,0,.9)
+                    );
+            }
+
+            .poster-content {
+                position: relative;
+                z-index: 2;
+            }
+
+            .poster-title {
+                font-size: 19px;
+                font-weight: 900;
+
+                text-transform: uppercase;
+
+                text-shadow: 0 2px 8px black;
+            }
+
+            .poster-type {
+                margin-top: 5px;
+
+                color: #ddd;
+                font-size: 11px;
+            }
+
+            .movie-info {
+                padding: 10px 12px;
+            }
+
+            .movie-info strong {
+                display: block;
+                font-size: 13px;
+            }
+
+            .movie-info span {
+                display: block;
+
+                margin-top: 4px;
+
+                color: #999;
+                font-size: 11px;
+            }
+
+            /* Poster styles */
+
+            .p1 {
+                background:
+                    linear-gradient(135deg,#56151b,#111,#db6931);
+            }
+
+            .p2 {
+                background:
+                    linear-gradient(135deg,#173c60,#b46a3a,#111);
+            }
+
+            .p3 {
+                background:
+                    linear-gradient(135deg,#321361,#e1428a,#111);
+            }
+
+            .p4 {
+                background:
+                    linear-gradient(135deg,#07323b,#098888,#061414);
+            }
+
+            .p5 {
+                background:
+                    linear-gradient(135deg,#b47b35,#25160b,#080808);
+            }
+
+            .p6 {
+                background:
+                    linear-gradient(135deg,#252525,#777,#080808);
+            }
+
+            .p7 {
+                background:
+                    linear-gradient(135deg,#6d0b0b,#db641a,#111);
+            }
+
+            .p8 {
+                background:
+                    linear-gradient(135deg,#571c4b,#dc6372,#17101d);
+            }
+
+            .p9 {
+                background:
+                    linear-gradient(135deg,#1d2a37,#63788c,#070b0f);
+            }
+
+            .p10 {
+                background:
+                    linear-gradient(135deg,#145b3c,#b8a33e,#101a0d);
+            }
+
+            .p11 {
+                background:
+                    linear-gradient(135deg,#333,#bd202a,#050505);
+            }
+
+            .p12 {
+                background:
+                    linear-gradient(135deg,#21184d,#5745c2,#07060d);
+            }
+
+            /* =========================
+               FOOTER
+            ========================= */
+
+            footer {
+                text-align: center;
+
+                padding: 50px 20px 80px;
+
+                color: #777;
+
+                font-size: 12px;
+            }
+
+            /* =========================
+               MOBILE
+            ========================= */
+
+            @@media (max-width: 900px) {
+
+                .nav-links a:nth-child(n+4) {
+                    display: none;
+                }
+
+                .movie {
+                    flex-basis: 24%;
+                }
+
+                .hero-person {
+                    right: 0;
+                    opacity: .4;
+                }
+            }
+
+            @@media (max-width: 600px) {
+
+                .navbar {
+                    padding: 0 18px;
+                }
+
+                .logo {
+                    font-size: 22px;
+                    margin-right: 15px;
+                }
+
+                .nav-links {
+                    display: none;
+                }
+
+                .kids {
+                    display: none;
+                }
+
+                .hero {
+                    min-height: 560px;
+                }
+
+                .hero-content {
+                    margin-left: 20px;
+                    margin-right: 20px;
+                }
+
+                .hero-title {
+                    font-size: 55px;
+                }
+
+                .description {
+                    font-size: 14px;
+                }
+
+                .content {
+                    padding: 0 20px 40px;
+                }
+
+                .movie {
+                    min-width: 145px;
+                }
+
+                .poster {
+                    height: 205px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header class="navbar">
+
+        <div class="nav-left">
+
+            <div class="logo">
+                NETFLIX
+            </div>
+
+            <nav class="nav-links">
+
+                <a href="#" class="active">Home</a>
+                <a href="#">TV Shows</a>
+                <a href="#">Movies</a>
+                <a href="#">New & Popular</a>
+                <a href="#">My List</a>
+
+            </nav>
+
+        </div>
+
+        <div class="nav-right">
+
+            <span class="search">⌕</span>
+
+            <span class="kids">
+                Kids
+            </span>
+
+            <span class="notification">
+                ♢
+            </span>
+
+            <div class="profile">
+                D
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-person"></div>
+
+        <div class="hero-content">
+
+            <div class="original">
+                NETFLIX ORIGINAL
+            </div>
+
+            <h1 class="hero-title">
+                THE LAST<br />
+                FRONTIER
+            </h1>
+
+            <div class="details">
+                <span>2026</span>
+                <span>16+</span>
+                <span>1 Season</span>
+                <span>4K</span>
+            </div>
+
+            <p class="description">
+                A fearless team journeys beyond the known world,
+                where survival, mystery and unexpected alliances collide.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button class="btn btn-play">
+                    ▶ &nbsp; Play
+                </button>
+
+                <button class="btn btn-info">
+                    ⓘ &nbsp; More Info
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- MOVIE CONTENT -->
+    <main class="content">
+
+
+        <!-- TRENDING -->
+        <section class="row">
+
+            <h2 class="row-title">
+                Trending Now
+            </h2>
+
+            <div class="movie-row">
+
+                <div class="movie">
+                    <div class="poster p1">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Midnight City
+                            </div>
+                            <div class="poster-type">
+                                Thriller
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>Midnight City</strong>
+                        <span>Thriller</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p2">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                The Summit
+                            </div>
+                            <div class="poster-type">
+                                Drama
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>The Summit</strong>
+                        <span>Drama</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p3">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Neon Horizon
+                            </div>
+                            <div class="poster-type">
+                                Sci-Fi
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>Neon Horizon</strong>
+                        <span>Sci-Fi</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p4">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Black Tide
+                            </div>
+                            <div class="poster-type">
+                                Mystery
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>Black Tide</strong>
+                        <span>Mystery</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p5">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Afterlight
+                            </div>
+                            <div class="poster-type">
+                                Drama
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>Afterlight</strong>
+                        <span>Drama</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p6">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Hidden Signal
+                            </div>
+                            <div class="poster-type">
+                                Thriller
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="movie-info">
+                        <strong>Hidden Signal</strong>
+                        <span>Thriller</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- POPULAR -->
+        <section class="row">
+
+            <h2 class="row-title">
+                Popular on Netflix
+            </h2>
+
+            <div class="movie-row">
+
+                <div class="movie">
+                    <div class="poster p7">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Kingdom Fall
+                            </div>
+                            <div class="poster-type">
+                                Action
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Kingdom Fall</strong>
+                        <span>Action</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p8">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Red Moon
+                            </div>
+                            <div class="poster-type">
+                                Drama
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Red Moon</strong>
+                        <span>Drama</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p9">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                The Operator
+                            </div>
+                            <div class="poster-type">
+                                Crime
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>The Operator</strong>
+                        <span>Crime</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p10">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Wildlands
+                            </div>
+                            <div class="poster-type">
+                                Adventure
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Wildlands</strong>
+                        <span>Adventure</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p11">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Zero Hour
+                            </div>
+                            <div class="poster-type">
+                                Action
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Zero Hour</strong>
+                        <span>Action</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p12">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Dark Matter
+                            </div>
+                            <div class="poster-type">
+                                Sci-Fi
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Dark Matter</strong>
+                        <span>Sci-Fi</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTINUE WATCHING -->
+        <section class="row">
+
+            <h2 class="row-title">
+                Continue Watching
+            </h2>
+
+            <div class="movie-row">
+
+                <div class="movie">
+                    <div class="poster p1">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                The Archive
+                            </div>
+                            <div class="poster-type">
+                                S1:E4
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>The Archive</strong>
+                        <span>S1:E4</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p4">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Northbound
+                            </div>
+                            <div class="poster-type">
+                                S1:E7
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Northbound</strong>
+                        <span>S1:E7</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p9">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Code 47
+                            </div>
+                            <div class="poster-type">
+                                S2:E2
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Code 47</strong>
+                        <span>S2:E2</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p5">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                The Witness
+                            </div>
+                            <div class="poster-type">
+                                S1:E5
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>The Witness</strong>
+                        <span>S1:E5</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p3">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Orbit
+                            </div>
+                            <div class="poster-type">
+                                S1:E3
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Orbit</strong>
+                        <span>S1:E3</span>
+                    </div>
+                </div>
+
+
+                <div class="movie">
+                    <div class="poster p7">
+                        <div class="poster-content">
+                            <div class="poster-title">
+                                Last Call
+                            </div>
+                            <div class="poster-type">
+                                S1:E6
+                            </div>
+                        </div>
+                    </div>
+                    <div class="movie-info">
+                        <strong>Last Call</strong>
+                        <span>S1:E6</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <div>Netflix-style ASP.NET Core Razor Pages Demo</div>
+    </footer>
+
+
+    <script>
+
+            // Change navbar when scrolling
+
+            window.addEventListener("scroll", function () {
+
+                const navbar = document.querySelector(".navbar");
+
+                if (window.scrollY > 40) {
+                    navbar.style.background = "#141414";
+                } else {
+                    navbar.style.background =
+                        "linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,.7), transparent)";
+                }
+
+            });
+
+
+            // Demo buttons
+
+            document.querySelector(".btn-play")
+                .addEventListener("click", function () {
+
+                    alert("Playing The Last Frontier");
+
+                });
+
+
+            document.querySelector(".btn-info")
+                .addEventListener("click", function () {
+
+                    alert("More information about The Last Frontier");
+
+                });
+
+    </script>
+
+</body>
+</html>
