@@ -1,6 +1,6 @@
 # DevOps Learning Journey — Terraform
 
-Hands-on notes and labs from my daily DevOps study, currently on **Day 51**.
+Hands-on notes and labs from my daily DevOps study, currently on **Day 52**.
 Everything here is written and run by me — notes in my own words, and working
 infrastructure code I have actually deployed and destroyed.
 
@@ -15,7 +15,8 @@ infrastructure code I have actually deployed and destroyed.
 | 01 | [Introduction & Setup](05-terraform/notes/01-intro-and-setup.md) | 48 | ✅ |
 | 02 | [Core Workflow & Commands](05-terraform/notes/02-workflow-and-commands.md) | 49 | ✅ |
 | 03 | [State File](05-terraform/notes/03-state-file.md) | 50 | ✅ |
-| 04 | [Remote Backend](05-terraform/notes/04-remote-backend.md) | 51 | 🔄 |
+| 04 | [Remote Backend](05-terraform/notes/04-remote-backend.md) | 51 | ✅ |
+| 05 | [VMs & Meta-Arguments](05-terraform/notes/05-vms-and-meta-arguments.md) | 52 | ✅ |
 
 Earlier topics (Linux, Git, Docker, Kubernetes) and later ones (Ansible, CI/CD)
 will be added as separate folders.
@@ -26,6 +27,7 @@ will be added as separate folders.
 |-----|----------------|
 | [01 — First Azure resource](05-terraform/labs/01-azure-first-resource/) | Resource group via the full init→apply→destroy workflow |
 | [02 — Remote backend on Azure](05-terraform/labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
+| [03 — Multi-environment VMs](05-terraform/labs/03-multi-env-vms/) | dev/qa/prod VMs with isolated networking, via `for_each` |
 
 ## Reference
 

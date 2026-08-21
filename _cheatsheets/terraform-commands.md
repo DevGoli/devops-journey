@@ -51,3 +51,19 @@ aws sts get-caller-identity
 - `-auto-approve` — skip confirmation (labs only)
 - `terraform fmt -check` — fail if unformatted, for CI
 - `terraform plan -out=tfplan` — save a plan, apply exactly it later
+
+## Meta-arguments
+
+| Argument | Purpose |
+|---|---|
+| `count = N` | Create N instances, addressed by index `[0]`, `[1]` … |
+| `for_each = <map/set>` | Create one instance per key, addressed by key `["dev"]` |
+| `depends_on = [res]` | Explicit ordering for dependencies Terraform cannot infer |
+| `lifecycle { }` | `prevent_destroy`, `ignore_changes`, `create_before_destroy` |
+| `provider = alias` | Target a non-default (aliased) provider |
+
+Inside `for_each`: `each.key` and `each.value`.
+Inside `count`: `count.index`.
+
+> `count` and `for_each` are mutually exclusive on the same resource.
+> Prefer `for_each` — `count` recreates everything when an index shifts.
