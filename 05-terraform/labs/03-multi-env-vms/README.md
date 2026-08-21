@@ -82,7 +82,6 @@ terraform destroy
 - Referencing `azurerm_resource_group.rg[each.key].name` creates an **implicit**
   dependency, so the explicit `depends_on` lines are redundant here.
 
-
 ## Known improvements
 
 Things to fix as I learn more (deliberately left visible):

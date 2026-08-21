@@ -24,7 +24,7 @@ Covered so far: **CI/CD with Azure Pipelines** and **Terraform**.
 
 | # | Topic | Day | Status |
 |---|-------|-----|--------|
-| 01 | [Azure DevOps & Continuous Integration](07-cicd/notes/01-azure-devops-and-ci.md) | 44 | ✅ |
+| 01 | [Azure DevOps & Continuous Integration](04-cicd/notes/01-azure-devops-and-ci.md) | 44 | ✅ |
 
 Earlier topics (Linux, Git, Docker, Kubernetes) and later ones (Ansible, more
 CI/CD) will be added as separate folders.
@@ -36,7 +36,7 @@ CI/CD) will be added as separate folders.
 | [01 — First Azure resource](05-terraform/labs/01-azure-first-resource/) | Resource group via the full init→apply→destroy workflow |
 | [02 — Remote backend on Azure](05-terraform/labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
 | [03 — Multi-environment VMs](05-terraform/labs/03-multi-env-vms/) | dev/qa/prod VMs with isolated networking, via `for_each` |
-| [CI/CD 01 — Azure Pipelines for .NET](07-cicd/labs/01-azure-pipelines-dotnet/) | ASP.NET Core app built by a CI pipeline on a hosted agent |
+| [CI/CD 01 — Azure Pipelines for .NET](04-cicd/labs/01-azure-pipelines-dotnet/) | ASP.NET Core app built by a CI pipeline on a hosted agent |
 
 ## Reference
 
@@ -50,7 +50,7 @@ CI/CD) will be added as separate folders.
 ├── 05-terraform/       Infrastructure as Code
 │   ├── notes/          concepts, in my own words, tagged by day
 │   └── labs/           working code, each with its own README
-├── 07-cicd/            Azure Pipelines
+├── 04-cicd/            Azure Pipelines
 │   ├── notes/
 │   └── labs/
 └── _cheatsheets/       quick command references
