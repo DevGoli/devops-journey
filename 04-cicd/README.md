@@ -8,6 +8,10 @@ Continuous Integration and Deployment with Azure Pipelines.
 |---|-------|-----|
 | 01 | [Azure DevOps & Continuous Integration](notes/01-azure-devops-and-ci.md) | 44 |
 
+## Interview prep
+
+→ [CI/CD interview questions](interview-questions.md)
+
 ## Labs
 
 | Lab | What it does |

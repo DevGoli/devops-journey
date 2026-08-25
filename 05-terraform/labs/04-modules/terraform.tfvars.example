@@ -1,0 +1,12 @@
+# Copy to terraform.tfvars and fill in.
+# terraform.tfvars is gitignored - never commit real values.
+
+resource_group_name  = "rg_demo_dev"
+location             = "canadacentral"
+storage_account_name = "sa<globally-unique-name>"
+vm_name              = "demovm"
+admin_username       = "devopsuser"
+
+# Do NOT put a real password here. See README - use an environment
+# variable (TF_VAR_admin_password) or Azure Key Vault instead.
+admin_password       = "<set-via-TF_VAR_admin_password>"

@@ -11,6 +11,11 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | 03 | [State File](notes/03-state-file.md) | 50 |
 | 04 | [Remote Backend](notes/04-remote-backend.md) | 51 |
 | 05 | [VMs & Meta-Arguments](notes/05-vms-and-meta-arguments.md) | 52 |
+| 06 | [Modules](notes/06-modules.md) | 53 |
+
+## Interview prep
+
+→ [Terraform interview questions](interview-questions.md)
 
 ## Labs
 
@@ -19,6 +24,7 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | [01 — First Azure resource](labs/01-azure-first-resource/) | Resource group via the full init→apply→destroy workflow |
 | [02 — Remote backend on Azure](labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
 | [03 — Multi-environment VMs](labs/03-multi-env-vms/) | dev/qa/prod VMs, each with isolated vnet and subnet, via `for_each` |
+| [04 — Modules](labs/04-modules/) | RG, storage account and VM composed from three reusable child modules |
 
 ## What I can do with Terraform
 
@@ -29,3 +35,5 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 - Configure a remote backend with state locking and versioning
 - Use meta-arguments (`for_each`, `count`, `lifecycle`, `depends_on`) to build repeatable multi-environment infrastructure
 - Provision Linux VMs with networking and SSH key authentication
+- Write and compose reusable modules with typed inputs and outputs
+- Handle secrets correctly — no credentials in committed files or state in Git
