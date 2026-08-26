@@ -1,0 +1,6 @@
+resource_group_name  = "rg_demo_development"
+location             = "canadacentral"
+storage_account_name = "netflixsa1236547893"
+vm_name              = "netflixvm2"
+admin_username       = "devopsuser"
+admin_password       = "<set-via-TF_VAR_admin_password>"

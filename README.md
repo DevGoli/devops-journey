@@ -1,6 +1,6 @@
 # DevOps Learning Journey
 
-Hands-on notes and labs from my daily DevOps study, currently on **Day 53**.
+Hands-on notes and labs from my daily DevOps study, currently on **Day 54**.
 Everything here is written and run by me — notes in my own words, and working
 infrastructure code I have actually deployed and destroyed.
 
@@ -20,6 +20,7 @@ Covered so far: **CI/CD with Azure Pipelines** and **Terraform**.
 | 04 | [Remote Backend](05-terraform/notes/04-remote-backend.md) | 51 | ✅ |
 | 05 | [VMs & Meta-Arguments](05-terraform/notes/05-vms-and-meta-arguments.md) | 52 | ✅ |
 | 06 | [Modules](05-terraform/notes/06-modules.md) | 53 | ✅ |
+| 07 | [Workspaces & State Operations](05-terraform/notes/07-workspaces-and-state-operations.md) | 54 | ✅ |
 
 ## CI/CD
 
@@ -37,7 +38,7 @@ CI/CD) will be added as separate folders.
 | [01 — First Azure resource](05-terraform/labs/01-azure-first-resource/) | Resource group via the full init→apply→destroy workflow |
 | [02 — Remote backend on Azure](05-terraform/labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
 | [03 — Multi-environment VMs](05-terraform/labs/03-multi-env-vms/) | dev/qa/prod VMs with isolated networking, via `for_each` |
-| [04 — Modules](05-terraform/labs/04-modules/) | RG, storage account and VM composed from reusable child modules |
+| [04 — Modules](05-terraform/labs/04-modules/) | RG, storage account and VM composed from reusable child modules, with dev/qa workspaces |
 | [CI/CD 01 — Azure Pipelines for .NET](04-cicd/labs/01-azure-pipelines-dotnet/) | ASP.NET Core app built by a CI pipeline on a hosted agent |
 
 ## Interview prep

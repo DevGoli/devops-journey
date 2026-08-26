@@ -5,7 +5,7 @@ reusable **child modules** from one root configuration.
 
 **Concepts:** modules · `source` · module inputs and outputs · composition
 
-**Day:** 53
+**Day:** 53–54
 
 ## Structure
 
@@ -15,6 +15,9 @@ reusable **child modules** from one root configuration.
 ├── variables.tf               inputs for the whole stack
 ├── providers.tf
 ├── terraform.tfvars.example
+├── dev.tfvars.example
+├── qa.tfvars.example
+├── outputs.tf
 │
 ├── resource-group/            ← child module
 │   ├── main.tf
@@ -104,6 +107,33 @@ but the habit matters:
 - Better still, avoid passwords entirely: use SSH keys for Linux, or generate
   one with `random_password` and write it straight to Key Vault.
 
+## Workspaces (Day 54)
+
+Extended with per-environment state:
+
+```bash
+terraform workspace new dev
+```
+
+```bash
+terraform apply -var-file="dev.tfvars"
+```
+
+```bash
+terraform workspace new qa
+```
+
+```bash
+terraform apply -var-file="qa.tfvars"
+```
+
+Each workspace gets its own state under `terraform.tfstate.d/<name>/`, so dev
+and qa coexist instead of one destroying the other.
+
+> **Watch out:** the selected workspace and the `-var-file` you pass are
+> independent. Being in workspace `qa` while passing `dev.tfvars` writes dev's
+> resources into qa's state. Always `terraform workspace show` before applying.
+
 ## Known improvements
 
 - [ ] `virtual-machines` hardcodes `10.0.0.0/16`, `10.0.0.0/24` and
@@ -112,7 +142,8 @@ but the habit matters:
       sensible defaults.
 - [ ] `"${var.vm_name}.vnet"` uses a dot; everything else uses a hyphen
       (`-subnet`, `-pip`, `-nic`). Should be `-vnet` for consistency.
-- [ ] Root `outputs.tf` is empty — the VM's public IP should be surfaced.
+- [x] ~~Root `outputs.tf` is empty~~ — added Day 54 (RG, storage account, VM names).
+- [ ] Root outputs still don't surface the VM's public IP.
 - [ ] No `tags` on any resource.
 - [ ] Provider pinned `>= 4.0.0` rather than `~> 4.0`.
 

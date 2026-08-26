@@ -164,3 +164,56 @@ with restricted access.
 **What's in your `.gitignore` for a Terraform repo?**
 `*.tfstate`, `*.tfstate.*`, `.terraform/`, `*.tfvars`, plus keys and `.env`.
 Commit `*.tfvars.example` with placeholders instead.
+
+---
+
+## Workspaces & state operations (Day 54)
+
+**What problem do workspaces solve?**
+One configuration has one state file. If you just swap `dev.tfvars` for
+`qa.tfvars`, Terraform compares the new inputs against the existing state,
+decides the resources were renamed, and destroys dev to create qa. Workspaces
+give each environment its own state file so they coexist.
+
+**Where is workspace state stored?**
+The `default` workspace keeps state at `terraform.tfstate`. Named workspaces go
+in `terraform.tfstate.d/<name>/terraform.tfstate`. With a remote backend it's the
+same idea using key prefixes.
+
+**Would you use workspaces for dev/qa/prod in production?** ⭐
+Probably not, and this is HashiCorp's own guidance. Workspaces suit temporary
+parallel copies — a feature branch or short-lived test. For real environments the
+problems are: all workspaces share one backend and one set of credentials, so
+prod isn't separately locked down; the selected workspace is invisible, so
+applying to the wrong one is easy; and one config can't cleanly express genuine
+differences between environments. The common production pattern is a directory
+per environment, each with its own backend, all calling shared modules.
+
+**What's the classic workspace mistake?** ⭐
+The workspace and the `-var-file` are independent choices. Selecting workspace
+`dev` does not make Terraform read `dev.tfvars`. Being in `qa` while passing
+`dev.tfvars` writes dev's resources into qa's state. Always
+`terraform workspace show` before applying.
+
+**Someone changed a resource in the portal and the change should be kept. What
+do you do?** ⭐
+`terraform plan -refresh-only` to see the drift, then `terraform apply
+-refresh-only` to record it in state — no infrastructure is touched. Then the
+essential second step: **update the config to match**, because state now says
+`B2s` while the `.tf` file still says `B1s`, and the next ordinary plan would
+revert it. Config, state and reality all have to agree.
+
+**`-refresh-only` vs `lifecycle { ignore_changes }`?**
+`-refresh-only` is a one-off reconciliation — accept this drift now.
+`ignore_changes` is a standing instruction — stop watching this attribute
+permanently.
+
+**How do you destroy just one resource?**
+Find its address with `terraform state list`, then
+`terraform destroy -target="<address>"`. It's a recovery tool, not routine —
+targeting skips the dependency graph and can leave state inconsistent. Needing it
+often suggests the config should be split into smaller root modules.
+
+**Does `-target` affect all workspaces?**
+No. Every state operation is scoped to the currently selected workspace.
+Destroying in `qa` leaves `dev` untouched.
