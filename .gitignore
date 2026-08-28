@@ -52,3 +52,7 @@ desktop.ini
 *.user
 *.suo
 .vs/
+
+# Exception: this lab's tfvars contain only resource names, no secrets.
+# They are part of the lab's teaching value (per-environment variable files).
+!05-terraform/labs/05-cicd-multistage/terraform/*.tfvars

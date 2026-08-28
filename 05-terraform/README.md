@@ -13,6 +13,7 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | 05 | [VMs & Meta-Arguments](notes/05-vms-and-meta-arguments.md) | 52 |
 | 06 | [Modules](notes/06-modules.md) | 53 |
 | 07 | [Workspaces & State Operations](notes/07-workspaces-and-state-operations.md) | 54 |
+| 08 | [Terraform in CI/CD](notes/08-terraform-in-cicd.md) | 55 |
 
 ## Interview prep
 
@@ -26,6 +27,7 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | [02 — Remote backend on Azure](labs/02-remote-backend-azure/) | Migrating local state to a locked, versioned Storage Account |
 | [03 — Multi-environment VMs](labs/03-multi-env-vms/) | dev/qa/prod VMs, each with isolated vnet and subnet, via `for_each` |
 | [04 — Modules](labs/04-modules/) | RG, storage account and VM composed from three reusable child modules, with dev/qa workspaces |
+| [05 — Terraform in CI/CD](labs/05-cicd-multistage/) | **Multi-stage Azure Pipeline building an app and provisioning dev + qa infrastructure** |
 
 ## What I can do with Terraform
 
@@ -39,3 +41,5 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 - Write and compose reusable modules with typed inputs and outputs
 - Handle secrets correctly — no credentials in committed files or state in Git
 - Manage multiple environments with workspaces, and reconcile drift with `-refresh-only`
+- Run Terraform from a multi-stage CI/CD pipeline with per-environment remote state
+- Debug real pipeline and provider failures from logs

@@ -217,3 +217,49 @@ often suggests the config should be split into smaller root modules.
 **Does `-target` affect all workspaces?**
 No. Every state operation is scoped to the currently selected workspace.
 Destroying in `qa` leaves `dev` untouched.
+
+---
+
+## Terraform in CI/CD (Day 55)
+
+**How do you separate state per environment in a pipeline?** ⭐
+A backend config file per environment, differing in the blob `key` —
+`key = "dev.tfstate"` vs `key = "qa.tfstate"` — then
+`terraform init -reconfigure -backend-config="backend-dev.conf"`. Each
+environment writes to a different blob, so state is fully isolated. Preferred
+over workspaces because the environment is visible in a file rather than hidden
+in workspace selection.
+
+**What does `-reconfigure` do?**
+Discards the previously configured backend and uses the new one, instead of
+trying to migrate state between them. Needed when switching environments in the
+same directory.
+
+**Why `deployment` jobs rather than regular jobs?**
+They bind to an `environment`, which gives deployment history per environment
+and lets you attach approval gates — the mechanism for requiring sign-off before
+prod. Note they don't check out the repo by default, so `- checkout: self` is
+required.
+
+**Where do downloaded artifacts land?**
+`$(Pipeline.Workspace)/<artifact-name>`, not `$(System.DefaultWorkingDirectory)`,
+which is the repo checkout. Getting this wrong gives "No package found with
+specified pattern".
+
+**Tell me about a pipeline failure you debugged.** ⭐
+My Terraform stage failed with `ResourceGroupNotFound`. The log showed the
+resource group and the service plan both starting to create at the same instant —
+they should have been sequential. Cause was `resource_group_name = var.rgname`,
+a plain string, so Terraform saw no dependency between them. The resource group
+took 24 seconds; the service plan hit Azure immediately and 404'd. Fixed by
+referencing `azurerm_resource_group.resourcerg.name`, which creates the implicit
+dependency. Two parallel "Creating..." lines where you expect sequence is the
+signature of a missing reference.
+
+**Any gotchas you've hit with pipeline YAML?**
+`steps:` indented under `pool:` instead of beside it — Azure Pipelines ignored
+the misplaced key rather than erroring, so the build job ran zero tasks and
+reported success in six seconds. A build that passes suspiciously fast is worth
+investigating. Also learned a green `terraform init` doesn't prove you're in the
+right directory: init in an empty folder is a valid no-op, so a bad `cd` only
+surfaced at `apply`.
