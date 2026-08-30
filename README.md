@@ -1,10 +1,10 @@
 # DevOps Learning Journey
 
-Hands-on notes and labs from my daily DevOps study, currently on **Day 55**.
+Hands-on notes and labs from my daily DevOps study, currently on **Day 57**.
 Everything here is written and run by me — notes in my own words, and working
 infrastructure code I have actually deployed and destroyed.
 
-**Currently focused on:** Terraform (Infrastructure as Code) on Azure and AWS.
+**Currently focused on:** Terraform (Infrastructure as Code) across Azure and AWS.
 
 Covered so far: **CI/CD with Azure Pipelines** and **Terraform**.
 
@@ -22,6 +22,7 @@ Covered so far: **CI/CD with Azure Pipelines** and **Terraform**.
 | 06 | [Modules](05-terraform/notes/06-modules.md) | 53 | ✅ |
 | 07 | [Workspaces & State Operations](05-terraform/notes/07-workspaces-and-state-operations.md) | 54 | ✅ |
 | 08 | [Terraform in CI/CD](05-terraform/notes/08-terraform-in-cicd.md) | 55 | ✅ |
+| 09 | [AWS: Providers & Multi-Region](05-terraform/notes/09-aws-providers-and-multi-region.md) | 56–57 | ✅ |
 
 ## CI/CD
 
@@ -41,6 +42,8 @@ CI/CD) will be added as separate folders.
 | [03 — Multi-environment VMs](05-terraform/labs/03-multi-env-vms/) | dev/qa/prod VMs with isolated networking, via `for_each` |
 | [04 — Modules](05-terraform/labs/04-modules/) | RG, storage account and VM composed from reusable child modules, with dev/qa workspaces |
 | [05 — Terraform in CI/CD](05-terraform/labs/05-cicd-multistage/) | **Multi-stage pipeline: build once, provision dev + qa with Terraform, deploy to both** |
+| [06 — AWS multi-region](05-terraform/labs/06-aws-multi-region/) | EC2 in two AWS regions via provider aliases |
+| [07 — AWS VPC network](05-terraform/labs/07-aws-vpc-network/) | VPC, public/private subnets, IGW, route table, EC2 and S3 |
 | [CI/CD 01 — Azure Pipelines for .NET](04-cicd/labs/01-azure-pipelines-dotnet/) | ASP.NET Core app built by a CI pipeline on a hosted agent |
 
 ## Interview prep

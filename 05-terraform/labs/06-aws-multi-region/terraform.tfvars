@@ -1,0 +1,6 @@
+primary_region   = "ap-southeast-4"
+primary_ami      = "ami-01f9e32add5a43171"
+secondary_region = "ap-southeast-2"
+secondary_ami    = "ami-06259b63260eddc13"
+bucket_name      = "netflix-englishmovies-india"
+instance_type    = "t3.micro"

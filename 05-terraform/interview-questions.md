@@ -263,3 +263,46 @@ reported success in six seconds. A build that passes suspiciously fast is worth
 investigating. Also learned a green `terraform init` doesn't prove you're in the
 right directory: init in an empty folder is a valid no-op, so a bad `cd` only
 surfaced at `apply`.
+
+---
+
+## AWS: providers and networking (Days 56–57)
+
+**How does deploying to two regions differ between AWS and Azure?** ⭐
+In Azure, region is an argument on each resource, so you change `location`. In
+AWS, region belongs to the **provider**, so a second region means declaring a
+second provider with an `alias` and pointing resources at it with
+`provider = aws.secondary`.
+
+**Why can't you reuse an AMI ID across regions?**
+AMI IDs are region-scoped — the same ID identifies a different image, or none at
+all, in another region. Copying one gives `InvalidAMIID.NotFound`.
+
+**Why `aws_vpc.vpc.id` rather than `aws_vpc.vpc`?** ⭐
+`aws_vpc.vpc` is the whole resource object with many attributes. The API needs
+one specific string, so you name the attribute. AWS identifies resources by
+generated IDs; Azure often accepts names — which attribute a field wants is in
+the provider docs.
+
+**What makes a subnet "public" in AWS?**
+Nothing on the subnet itself — there's no public subnet resource type. It's
+public because it's associated with a route table that routes `0.0.0.0/0` to an
+internet gateway, usually with `map_public_ip_on_launch` set too.
+
+**What's the security group gotcha with Terraform?** ⭐
+AWS gives a new security group a default allow-all **egress** rule. Once
+Terraform manages the group, omitting an `egress` block **removes** that rule —
+so instances silently lose all outbound access and can't install packages or
+reach AWS APIs. Always declare egress explicitly.
+
+**What is Terraform's variable precedence?**
+Later wins: `default` in the variable block → `terraform.tfvars` →
+`*.auto.tfvars` → `-var-file` → `-var` → `TF_VAR_` environment variable. A
+variable with no default and no value prompts interactively.
+
+**You changed an AMI and the plan shows `-/+`. What does that mean?**
+Destroy and recreate. `ami` is immutable — AWS can't swap the image on a running
+instance — so Terraform terminates and relaunches it. The plan marks it
+`# forces replacement`. Fine for stateless instances; on anything with local
+data it means loss and downtime. `create_before_destroy` can reduce the outage
+where supported.

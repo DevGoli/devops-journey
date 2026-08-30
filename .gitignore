@@ -56,3 +56,5 @@ desktop.ini
 # Exception: this lab's tfvars contain only resource names, no secrets.
 # They are part of the lab's teaching value (per-environment variable files).
 !05-terraform/labs/05-cicd-multistage/terraform/*.tfvars
+!05-terraform/labs/06-aws-multi-region/*.tfvars
+!05-terraform/labs/07-aws-vpc-network/*.tfvars
