@@ -306,3 +306,45 @@ instance — so Terraform terminates and relaunches it. The plan marks it
 `# forces replacement`. Fine for stateless instances; on anything with local
 data it means loss and downtime. `create_before_destroy` can reduce the outage
 where supported.
+
+---
+
+## Multi-cloud & S3 backend (Day 58)
+
+**How do you configure remote state on AWS?** ⭐
+An `s3` backend block with `bucket`, `key`, `region`, `encrypt = true` and
+locking. `key` is the state object path, so it separates environments the same
+way the Azure backend's key does. The bucket must exist beforehand — Terraform
+can't create the place it stores its own state.
+
+**How does S3 state locking work?** ⭐
+Historically the S3 backend couldn't lock alone and needed a **DynamoDB table**
+with a `LockID` key, configured via `dynamodb_table` — that's what most existing
+codebases use. Since Terraform 1.10, `use_lockfile = true` uses S3 conditional
+writes to hold the lock as an object beside the state, so the DynamoDB table is
+no longer required.
+
+**Can one Terraform config manage more than one cloud?** ⭐
+Yes — declare both providers, and one `apply` builds both. There's a single
+state file and a single dependency graph spanning providers, so unrelated
+resources across clouds build in parallel. This is Terraform's main advantage
+over ARM/Bicep or CloudFormation, which are each tied to one cloud.
+
+**How would you structure a multi-cloud config?**
+One child module per cloud, with the root module as a thin orchestrator that
+owns no resources. Prefix variables by cloud (`aws_`, `azure_`) so inputs are
+unambiguous.
+
+**Should a reusable module contain its own `provider` block?**
+No. Child modules inherit providers from the root. Declaring providers inside a
+module stops the caller choosing region or credentials and prevents the module
+being reused with a different provider. Pass values in as variables.
+
+**What is `[*]` in an output?**
+The splat operator — `aws_instance.ec2[*].id` collects the `id` of every
+instance in the collection. Equivalent to
+`[for i in aws_instance.ec2 : i.id]`.
+
+**Why might `terraform output` show nothing even though modules define outputs?**
+Module outputs aren't automatically visible at the root. They have to be
+re-exported: `output "aws_vm_ids" { value = module.aws.vm_ids }`.

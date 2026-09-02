@@ -1,6 +1,6 @@
 # DevOps Learning Journey
 
-Hands-on notes and labs from my daily DevOps study, currently on **Day 57**.
+Hands-on notes and labs from my daily DevOps study, currently on **Day 58**.
 Everything here is written and run by me — notes in my own words, and working
 infrastructure code I have actually deployed and destroyed.
 
@@ -23,6 +23,7 @@ Covered so far: **CI/CD with Azure Pipelines** and **Terraform**.
 | 07 | [Workspaces & State Operations](05-terraform/notes/07-workspaces-and-state-operations.md) | 54 | ✅ |
 | 08 | [Terraform in CI/CD](05-terraform/notes/08-terraform-in-cicd.md) | 55 | ✅ |
 | 09 | [AWS: Providers & Multi-Region](05-terraform/notes/09-aws-providers-and-multi-region.md) | 56–57 | ✅ |
+| 10 | [Multi-Cloud & the S3 Backend](05-terraform/notes/10-multicloud-and-s3-backend.md) | 58 | ✅ |
 
 ## CI/CD
 
@@ -44,6 +45,7 @@ CI/CD) will be added as separate folders.
 | [05 — Terraform in CI/CD](05-terraform/labs/05-cicd-multistage/) | **Multi-stage pipeline: build once, provision dev + qa with Terraform, deploy to both** |
 | [06 — AWS multi-region](05-terraform/labs/06-aws-multi-region/) | EC2 in two AWS regions via provider aliases |
 | [07 — AWS VPC network](05-terraform/labs/07-aws-vpc-network/) | VPC, public/private subnets, IGW, route table, EC2 and S3 |
+| [08 — Multi-cloud](05-terraform/labs/08-multicloud/) | **Azure and AWS provisioned together in one apply, state in S3** |
 | [CI/CD 01 — Azure Pipelines for .NET](04-cicd/labs/01-azure-pipelines-dotnet/) | ASP.NET Core app built by a CI pipeline on a hosted agent |
 
 ## Interview prep

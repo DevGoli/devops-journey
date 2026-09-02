@@ -15,6 +15,7 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | 07 | [Workspaces & State Operations](notes/07-workspaces-and-state-operations.md) | 54 |
 | 08 | [Terraform in CI/CD](notes/08-terraform-in-cicd.md) | 55 |
 | 09 | [AWS: Providers & Multi-Region](notes/09-aws-providers-and-multi-region.md) | 56–57 |
+| 10 | [Multi-Cloud & the S3 Backend](notes/10-multicloud-and-s3-backend.md) | 58 |
 
 ## Interview prep
 
@@ -31,6 +32,7 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 | [05 — Terraform in CI/CD](labs/05-cicd-multistage/) | **Multi-stage Azure Pipeline building an app and provisioning dev + qa infrastructure** |
 | [06 — AWS multi-region](labs/06-aws-multi-region/) | EC2 in two AWS regions via provider aliases |
 | [07 — AWS VPC network](labs/07-aws-vpc-network/) | VPC, public/private subnets across two AZs, IGW, route table, EC2 and S3 |
+| [08 — Multi-cloud](labs/08-multicloud/) | **Azure and AWS provisioned together in one apply, state in S3** |
 
 ## What I can do with Terraform
 
@@ -47,3 +49,4 @@ Infrastructure as Code with HashiCorp Terraform, on Azure and AWS.
 - Run Terraform from a multi-stage CI/CD pipeline with per-environment remote state
 - Debug real pipeline and provider failures from logs
 - Work across both Azure and AWS, including AWS provider aliases and VPC networking
+- Deploy to multiple clouds from a single configuration with remote state and locking
